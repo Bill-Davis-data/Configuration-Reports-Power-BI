@@ -1,0 +1,25 @@
+let
+    Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "TV%20Sheet.xlsx"), null, true),
+    Log_Sheet = Source{[Item="Log",Kind="Sheet"]}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(Log_Sheet,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type any}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type any}, {"Column9", type any}, {"Column10", type any}, {"Column11", type text}, {"Column12", type text}, {"Column13", type any}, {"Column14", type text}, {"Column15", type any}, {"Column16", type text}, {"Column17", Int64.Type}, {"Column18", type text}, {"Column19", type any}, {"Column20", type any}, {"Column21", type text}}),
+    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Initials", type text}, {"Action", type text}, {"POID", type text}, {"Quantity", Int64.Type}, {"Image", type text}, {"Type", type text}, {"Location", type text}, {"Time", type datetime}, {"Date no time", type date}, {"RC#", type text}, {"School Name", type text}, {"Delivery Qty", Int64.Type}, {"Ready By Date", type date}, {"PO#", type text}, {"Column15", type any}, {"Total ECF etching done:", type text}, {"-50", type number}, {"Unhide column to the right for formulas >", type text}, {"Column19", type any}, {"Column20", type any}, {"Delivery Quantity formula", type text}}),
+    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type1",{"Initials", "Action", "POID", "Quantity", "Image", "Type", "Location", "Time", "Date no time", "RC#", "School Name", "Delivery Qty", "Ready By Date", "PO#"}),
+    #"Removed Blank Rows" = Table.SelectRows(#"Removed Other Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+    #"Appended Data Entry" = Table.Combine({#"Removed Blank Rows", #"Data Entry"}),
+    #"Appended Archive" = Table.Combine({#"Appended Data Entry", #"Archive Log"}),
+    #"Uppercased Text" = Table.TransformColumns(#"Appended Archive",{{"POID", Text.Upper, type text}}),
+    #"Capitalized Each Word" = Table.TransformColumns(#"Uppercased Text",{{"Action", Text.Proper, type text}}),
+    #"Replaced Value" = Table.ReplaceValue(#"Capitalized Each Word","Qc","QC",Replacer.ReplaceText,{"Action"}),
+    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value",#date(1899, 12, 31),#date(2021, 1, 1),Replacer.ReplaceValue,{"Ready By Date", "Date no time"}),
+    #"Filtered Rows" = Table.SelectRows(#"Replaced Value1", each true),
+    #"Merged Queries" = Table.NestedJoin(#"Filtered Rows", {"Action"}, Statuses, {"Statuses"}, "Statuses", JoinKind.LeftOuter),
+    #"Expanded Statuses" = Table.ExpandTableColumn(#"Merged Queries", "Statuses", {"Index"}, {"Statuses.Index"}),
+    #"Inserted Time" = Table.AddColumn(#"Expanded Statuses", "Time.1", each DateTime.Time([Time]), type time),
+    #"Renamed Columns" = Table.RenameColumns(#"Inserted Time",{{"Time.1", "Time Only"}}),
+    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "IsAfter4pm", each if [Time Only] > #time(16, 15, 0) then "After 4pm" else "Before 4pm"),
+    #"Added Conditional Column2" = Table.AddColumn(#"Added Conditional Column", "IsAfter1:30pm", each if [Time Only] > #time(13, 45, 0) then "After 1:30pm" else "Before 1:30pm"),
+    #"Merged Queries1" = Table.NestedJoin(#"Added Conditional Column2", {"POID"}, Orders, {"POID"}, "Orders", JoinKind.LeftOuter),
+    #"Expanded Orders" = Table.ExpandTableColumn(#"Merged Queries1", "Orders", {"Program"}, {"Program"})
+in
+    #"Expanded Orders"
