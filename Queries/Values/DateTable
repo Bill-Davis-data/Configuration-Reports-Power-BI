@@ -1,0 +1,43 @@
+let
+    StartDate = #date(StartYear,1,1),
+    EndDate = #date(EndYear,12,31),
+    NumberOfDays = Duration.Days( EndDate - StartDate ),
+    Dates = List.Dates(StartDate, NumberOfDays+1, #duration(1,0,0,0)),
+    #"Converted to Table" = Table.FromList(Dates, Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Renamed Columns" = Table.RenameColumns(#"Converted to Table",{{"Column1", "FullDateAlternateKey"}}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"FullDateAlternateKey", type date}}),
+    #"Inserted Year" = Table.AddColumn(#"Changed Type", "Year", each Date.Year([FullDateAlternateKey]), type number),
+    #"Inserted Month" = Table.AddColumn(#"Inserted Year", "Month", each Date.Month([FullDateAlternateKey]), type number),
+    #"Inserted Month Name" = Table.AddColumn(#"Inserted Month", "Month Name", each Date.MonthName([FullDateAlternateKey]), type text),
+    #"Inserted Short Month Name" = Table.AddColumn(#"Inserted Month Name", "Short Month Name", each Text.Start(Date.MonthName([FullDateAlternateKey]), 3), type text),
+    #"Inserted Quarter" = Table.AddColumn(#"Inserted Short Month Name", "Quarter", each Date.QuarterOfYear([FullDateAlternateKey]), type number),
+    #"Inserted Week of Year" = Table.AddColumn(#"Inserted Quarter", "Week of Year", each Date.WeekOfYear([FullDateAlternateKey]), type number),
+    #"Inserted Week of Month" = Table.AddColumn(#"Inserted Week of Year", "Week of Month", each Date.WeekOfMonth([FullDateAlternateKey]), type number),
+    #"Inserted Day" = Table.AddColumn(#"Inserted Week of Month", "Day", each Date.Day([FullDateAlternateKey]), type number),
+    #"Inserted Day of Week" = Table.AddColumn(#"Inserted Day", "Day of Week", each Date.DayOfWeek([FullDateAlternateKey]), type number),
+    #"Inserted Day of Year" = Table.AddColumn(#"Inserted Day of Week", "Day of Year", each Date.DayOfYear([FullDateAlternateKey]), type number),
+    #"Inserted Day Name" = Table.AddColumn(#"Inserted Day of Year", "Day Name", each Date.DayOfWeekName([FullDateAlternateKey]), type text),
+    #"Inserted Short Day Name" = Table.AddColumn(#"Inserted Day Name", "Short Day Name", each Text.Start(Date.DayOfWeekName([FullDateAlternateKey]), 3), type text),
+    #"Inserted Fiscal Year" = Table.AddColumn(#"Inserted Short Day Name", "Fiscal Year", each if [Month]>=StartOfFiscalYear
+then [Year]+1
+else [Year]),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Inserted Fiscal Year",{{"Fiscal Year", Int64.Type}}),
+    #"Inserted Fiscal Period" = Table.AddColumn(#"Changed Type1", "Fiscal Period", each if [Month]>=StartOfFiscalYear
+then [Month]-(StartOfFiscalYear-1)
+else [Month]+(12-StartOfFiscalYear+1)),
+    #"Changed Type2" = Table.TransformColumnTypes(#"Inserted Fiscal Period",{{"Fiscal Period", Int64.Type}}),
+    #"Inserted Division" = Table.AddColumn(#"Changed Type2", "Inserted Division", each [Fiscal Period] / 3, type number),
+    #"Rounded Up" = Table.TransformColumns(#"Inserted Division",{{"Inserted Division", Number.RoundUp, Int64.Type}}),
+    #"Renamed Columns1" = Table.RenameColumns(#"Rounded Up",{{"Inserted Division", "Fiscal Quarter"}, {"FullDateAlternateKey", "Date"}}),
+    #"Inserted CurrentFY" = Table.AddColumn(#"Renamed Columns1", "CurrentFY", each if [Fiscal Year] = 
+
+(if Date.Month(DateTime.LocalNow())>=StartOfFiscalYear
+then Date.Year(DateTime.LocalNow())+1
+else Date.Year(DateTime.LocalNow())
+)
+
+then 1 else 0),
+    #"Changed Type3" = Table.TransformColumnTypes(#"Inserted CurrentFY",{{"CurrentFY", Int64.Type}}),
+    #"Duplicated Column" = Table.DuplicateColumn(#"Changed Type3", "Date", "Short Day Name 2")
+in
+    #"Duplicated Column"
