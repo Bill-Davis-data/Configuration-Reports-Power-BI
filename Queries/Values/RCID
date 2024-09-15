@@ -1,0 +1,6 @@
+let
+    Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Orders.xlsx"), null, true),
+    SchoolNames_Table = Source{[Item="SchoolNames",Kind="Table"]}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(SchoolNames_Table,{{"RCID", type text}, {"Lookup", type text}, {"RC#", type text}, {"School Name", type text}})
+in
+    #"Changed Type"
