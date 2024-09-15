@@ -1,0 +1,6 @@
+let
+    Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Orders.xlsx"), null, true),
+    MachineTypes_Table = Source{[Item="MachineTypes",Kind="Table"]}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(MachineTypes_Table,{{"Model", type text}, {"Current", type text}, {"Machine Types", type text}, {"Etched", type text}})
+in
+    #"Changed Type"
