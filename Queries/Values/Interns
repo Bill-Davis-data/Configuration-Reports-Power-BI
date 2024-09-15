@@ -1,0 +1,11 @@
+let
+    Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Huddle.xlsx"), null, true),
+    NameBank_Table = Source{[Item="NameBank",Kind="Table"]}[Data],
+    #"Changed Type2" = Table.TransformColumnTypes(NameBank_Table,{{"Arrival", type datetime}, {"Initials", type text}, {"Assigned", Int64.Type}, {"Assign", type text}, {"First Name", type text}, {"Last Name", type text}, {"IT", type text}, {"School", type text}, {"Attending", type text}, {"Major", type text}, {"Degree", type text}, {"Certs", type text}, {"Shift 2", type text}, {"Shift 3", type text}, {"Weekends", type text}}),
+    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type2",{"Alias", "First Name", "Last Name", "Initials", "Assign", "IT", "Key Interest", "School", "Attending", "Major", "Degree", "Certs", "Shift 2", "Shift 3", "Weekends", "Transportation"}),
+    #"Removed Blank Rows" = Table.SelectRows(#"Removed Other Columns", each not List.IsEmpty(List.RemoveMatchingItems(Record.FieldValues(_), {"", null}))),
+    #"Renamed Columns" = Table.RenameColumns(#"Removed Blank Rows",{{"Assign", "Active"}}),
+    #"Added Index" = Table.AddIndexColumn(#"Renamed Columns", "Index", 1, 1, Int64.Type),
+    Custom1 = Table.ReplaceValue(#"Added Index", null, each _[First Name] , Replacer.ReplaceValue, {"Alias"})
+in
+    Custom1
