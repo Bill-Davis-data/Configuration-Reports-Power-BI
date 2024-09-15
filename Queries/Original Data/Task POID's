@@ -1,1 +1,19 @@
-
+let
+    Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Orders.xlsx"), null, true),
+    #"Task POIDs_Sheet" = Source{[Item="Task POIDs",Kind="Sheet"]}[Data],
+    #"Promoted Headers" = Table.PromoteHeaders(#"Task POIDs_Sheet", [PromoteAllScalars=true]),
+    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Project", type text}, {"Delivered", type text}, {"Column3", type text}, {"Have/Need", type text}, {"PRINT STICKERS", type any}, {"ASSIGNED S/N", type any}, {"ON DATA", type any}, {"HAVE ASSET", type text}, {"DONE", type text}, {"Auto-", type text}, {"Column11", type text}, {"SCANNED", type any}, {"STAGED", type any}, {"DELIVERED", type any}, {"USE NO PUNCTUATION BELOW", type text}, {"Column16", type text}, {"New", type any}, {"Column21", type text}, {"If ANY cell is yellow, need confirm ", type text}, {"Column23", type text}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"DELIVERED", "DELIVERED.1"}}),
+    #"Promoted Headers1" = Table.PromoteHeaders(#"Renamed Columns", [PromoteAllScalars=true]),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers1",{{"Header", type text}, {"V", type text}, {"Picked", type text}, {"Asset", type text}, {"SAP#", type text}, {"PO#", type text}, {"RC#", type text}, {"SCHOOL", type text}, {"Task", type text}, {"Status", type text}, {"Issues", type text}, {"PO Deadline", type date}, {"Ready Date", type date}, {"Deliver Date", type date}, {"User Type", type text}, {"Machine Type", type text}, {"Model", type text}, {"Qty", Int64.Type}, {"Cart division", type text}, {"Program", type text}, {"POID", type text}, {"Notes", type text}, {"Pages Printed", type text}, {"Sheet Made", type text}}),
+    #"Uppercased Text" = Table.TransformColumns(#"Changed Type1",{{"POID", Text.Upper, type text}}),
+    #"Renamed Columns1" = Table.RenameColumns(#"Uppercased Text",{{"V", "Delivered"}}),
+    #"Added Custom" = Table.AddColumn(#"Renamed Columns1", "DCPS PO#", each Text.Start([#"PO#"],10)),
+    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"DCPS PO#", Int64.Type}}),
+    #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type2", {{"DCPS PO#", 0}}),
+    #"Inserted First Characters" = Table.AddColumn(#"Replaced Errors", "PO_Year", each Text.Start(Text.From([#"DCPS PO#"], "en-US"), 4), type text),
+    #"Removed Duplicates" = Table.Distinct(#"Inserted First Characters", {"POID"}),
+    #"Added Conditional Column" = Table.AddColumn(#"Removed Duplicates", "Note", each if [Use Note] = "2" then [Notes] else if [Use Note] = "1" then [Issues] else null),
+    #"Filtered Rows" = Table.SelectRows(#"Added Conditional Column", each ([POID] <> null ))
+in
+    #"Filtered Rows"
