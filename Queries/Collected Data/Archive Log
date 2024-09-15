@@ -1,0 +1,6 @@
+let
+    Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Huddle.xlsx"), null, true),
+    Archive_Table = Source{[Item="Archive",Kind="Table"]}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(Archive_Table,{{"Initials", type text}, {"Action", type text}, {"POID", type text}, {"Quantity", Int64.Type}, {"Image", type text}, {"Type", type text}, {"Location", type text}, {"Time", type datetime}, {"Date no time", type date}, {"RC#", type text}, {"School Name", type text}, {"Delivery Qty", Int64.Type}, {"Ready By Date", type date}, {"PO#", type text}})
+in
+    #"Changed Type"
