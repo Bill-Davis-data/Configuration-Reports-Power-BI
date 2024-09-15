@@ -1,0 +1,9 @@
+let
+    Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Orders.xlsx"), null, true),
+    Statuses_Table = Source{[Item="Statuses",Kind="Table"]}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(Statuses_Table,{{"Statuses", type text}}),
+    #"Capitalized Each Word" = Table.TransformColumns(#"Changed Type",{{"Statuses", Text.Proper, type text}}),
+    #"Replaced Value" = Table.ReplaceValue(#"Capitalized Each Word","Qc'D","QC",Replacer.ReplaceText,{"Statuses"}),
+    #"Added Index" = Table.AddIndexColumn(#"Replaced Value", "Index", 1, 1, Int64.Type)
+in
+    #"Added Index"
