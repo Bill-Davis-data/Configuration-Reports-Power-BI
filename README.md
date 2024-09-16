@@ -18,7 +18,7 @@ Collected Data: Tables with transactional data that is collected daily.
 
 #### Values
 
-##### Date Table
+###### Date Table
 
 StartYear and EndYear Parameters are used to limit the size of the table.
 
@@ -30,7 +30,7 @@ Conditional column created to give boolean results if each date is in the curren
 
 Duplicated Date column and renamed for later use in visualization with specific formatting.
 
-##### Other Tables
+###### Other Tables
 
 Minimal changes done to other Values tables besides Change type, Capitalize, and Remove unecessary columns.
 
