@@ -2,8 +2,6 @@
 
 **Purpose:** A portfolio showcasing my work creating daily reports for stakeholders and production monitoring
 
-[TOC]
-
 ## Queries
 
 ### Group Structure
