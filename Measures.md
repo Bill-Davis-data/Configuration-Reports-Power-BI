@@ -30,23 +30,6 @@ VAR TOTAL_UNBOXED =
 RETURN
 	IF(NOT ISBLANK(TOTAL_UNBOXED), TOTAL_ADAPTERS - TOTAL_UNBOXED)
 
-MEASURE 'Log'[AC Adapters Used] = 
-SUMX(
-    FILTER(
-        'Log',
-        'Log'[Action] = "CARTS"
-    ),
-    VAR CartDivSum = 
-        SUMX(
-            FILTER(
-                'Cart Division',
-                'Cart Division'[POID] = 'Log'[POID]
-            ),
-            'Cart Division'[TotalAdapters] * 'Log'[Quantity]
-        )
-    RETURN CartDivSum
-)
-
 MEASURE 'Log'[Accessories Shortage] = 
 VAR TOTAL_ACCESSORIES =
 	CALCULATE(
@@ -78,16 +61,6 @@ VAR TOTAL_ETCHED =
 	)
 RETURN
 	IF(NOT ISBLANK(TOTAL_ETCHED), TOTAL_CASES - TOTAL_ETCHED)
-
-MEASURE 'Log'[Card1Filter] = 
-IF(
-	ISBLANK(SELECTEDVALUE('DateTable'[Fiscal Year])), 
-	CALCULATE(
-		SUM('Log'[Quantity]), 
-		'DateTable'[CurrentFY]=1
-	), 
-	SUM('Log'[Quantity])
-)
 
 MEASURE 'Log'[Card2Filter] = 
 IF(
@@ -122,13 +95,6 @@ SWITCH(
 	QQ >= 1000, "#,.#K"
 )
 RETURN DecimalFormat
-
-MEASURE 'Log'[FormatIsComplete] = 
-IF(
-    ISBLANK(SUM('Log'[Quantity])) && [IsComplete] = 1,
-    1,
-    0
-)
 
 MEASURE 'Log'[GaugeFilter] = 
 IF(
@@ -172,15 +138,6 @@ VAR LAST_DATE =
 RETURN
 	IF(NOT ISBLANK(LAST_DATE), VALUE(TODAY() - LAST_DATE))
 
-MEASURE 'Log'[PersonalDailyAvg] = AVERAGEX(DateTable,CALCULATE(SUM('Log'[Quantity])))
-
-MEASURE 'Log'[PersonalDailyTotal] = 
-CALCULATE(
-	SUM('Log'[Quantity]), 
-	'Log'[Initials], 
-	'Log'[Action]
-)
-
 MEASURE 'Log'[ProjectSliced] = ISFILTERED('Log'[Program])
 
 MEASURE 'Log'[SelectedAction] = 
@@ -195,14 +152,6 @@ IF(
 	ISBLANK(SELECTEDVALUE('Log'[Action])), 
 	"Boxed", 
 	SELECTEDVALUE('Log'[Action])
-)
-
-MEASURE 'Log'[Test Cart Division Match] = 
-COUNTROWS(
-    FILTER(
-        'Cart Division',
-        'Cart Division'[POID] = 'Log'[POID]
-    )
 )
 
 MEASURE 'Log'[Weekly Avg] = DIVIDE(SUM('Log'[Quantity]), DISTINCTCOUNT(DateTable[Week of Year]))
@@ -220,8 +169,6 @@ RETURN
 # Orders
 ```
 MEASURE Orders[Message] = IF([ProjectSliced],"","Select a project in order to show results")
-
-MEASURE Orders[QtyDiff] = SUM(Orders[Qty]) - SUM('Log'[Quantity])
 ```
 
 # Targets
@@ -238,8 +185,6 @@ IF(
 		'Targets'[Action] = SELECTEDVALUE('Log'[Action])
 	)
 )
-
-MEASURE Targets[ProjectGauge1] = SUM(Orders[Qty])
 
 MEASURE Targets[TargetValue] = 
 IF(
