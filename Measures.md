@@ -1,8 +1,3 @@
-# Date Table
-```
-MEASURE DateTable[Current Month] = MONTH(NOW())
-```
-
 # Log
 ```
 MEASURE 'Log'[3 Month Etcher Maint] = 
