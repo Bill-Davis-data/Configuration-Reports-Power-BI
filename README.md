@@ -100,4 +100,60 @@ Merge Orders Query and expand Program column.
 
 ## Measures
 
+### Log Table
+
+3 Month Etcher Maint:	Value used on a card.	Returns the number of days since maintenance logged using last entry by date.
+
+AC Adapter Shortage:	Value used on a card.	Returns the difference in AC adapters logged and devices unboxed, excluding certain model types that do not apply.
+
+Accessories Shortage:	Value used on a card.	Returns the difference in Accessory boxes logged and devices unboxed, including only certain model types that apply.
+
+Blue Case Shortage:	Value used on a card.	Returns the difference in Blue Cases logged and devices etched, including only the certain model type that applies.
+
+Card2Filter:	Value used on a card.	Returns the weekly average imaged quantity for the current fiscal year.
+
+Card3Filter:	Value used on a card.	Returns the monthly average imaged quantity for the current fiscal year.
+
+DailyAvg:	Used in multiple visuals.	Returns the average quantity for each individual day.
+
+Fiscal Quantity:	Value used on stacked column charts.	Simple sum of orders quantity created in order to apply special formatting.
+
+_Fiscal Quantity FormatString:	Used to format stacked column charts.	Creates formatting style to abbreviate thousands into "K".
+
+GaugeFilter:	Used in several gauges.	Returns the Imaged daily average unless other context is selected.
+
+GaugeFilter100W:	Used in a gauge.	Returns the Boxed daily average unless other context is selected.
+
+IsComplete:	Used for conditional formatting.	Returns 1 if the quantity logged for any action is equal to the order quantity.
+
+MaxRecord:	Used in context with Tech/Intern initials.	Returns the maximum quantity  logged for each individual day.
+
+MessageHide:	Used to mask certain visuals until needed.	
+
+Monthly Avg:	Used in other measures.	Returns the monthly average of quantity logged.
+
+Monthly Etcher Maint:	Value used on a card.	Returns the number of days since maintenance logged using last entry by date.
+
+ProjectSliced:	Flag used in other measures to tell if certain visuals should be unmasked.	Returns a boolean value controlling custom formatting.
+
+SelectedAction:	Used in several gauges.	Returns "Imaged" as a default action if no context is selected.
+
+SelectedActionECF:	Used in a gauge.	Returns "Boxed" as a default action if no context is selected.
+
+Weekly Avg:	Value used on a card.	Returns the weekly average of quantity logged.
+
+Weekly Etcher Maint:	Value used on a card.	Returns the number of days since maintenance logged using last entry by date.
+
+### Orders
+
+Message:	Used when certain slicers are masked.	Returns either the message or a blank string based on a flag condition.
+
+### Targets
+
+MaxValue:	Used for a gauge.	Returns the Imaged max value unless other context is selected.
+
+TargetValue:	Used for a gauge.	Returns the Imaged target value unless other context is selected.
+
+
+
 ## Visualizations
