@@ -2,6 +2,9 @@
 
 **Purpose:** A portfolio showcasing my work creating daily reports for stakeholders and production monitoring.
 
+<img src="https://github.com/user-attachments/assets/48830fa8-0f89-453e-89b5-e06f8ba91d0f" width="321">
+<img src="https://github.com/user-attachments/assets/bc6a890a-47d0-448d-beeb-1db983d442bf" width="321">
+
 ## Glossary
 
 POID - Purchase Order ID.  A unique key column created to tie all of the order details together.
