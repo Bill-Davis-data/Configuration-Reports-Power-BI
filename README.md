@@ -162,9 +162,30 @@ TargetValue:	Used for a gauge.	Returns the Imaged target value unless other cont
 
 ## Visualizations
 
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Imaged%20by%20Model%20Page.png" width="749">
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/MBR-QBR%20Page.png" width="749">
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_1.png" width="749">
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_2.png" width="749">
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20Individual%20Page.png" width="749">
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20by%20Day%20Page.png" width="749">
+**The centerpeice of the report, the Imaged by Model page provides an accurate graphical representation of Imaging work performed over both the current and previous weeks.  This is the most important tool when forecasting completion dates during the project.**
+
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Imaged%20by%20Model%20Page.png" width="642">
+
+
+**The MBR/QBR page is a historical look spanning the entire range of records over years, as well as the last 12 months, rolling.  Created at the request of VP level personnel, this page is used to report services completed each month that can then be claimed for revenue.**
+
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/MBR-QBR%20Page.png" width="642">
+
+
+**The YTD page provides the ability to slice by various actions and date ranges as well as locations, machine types, and purchase orders.  This is most useful during pre-project planning for determining personnel needs.**
+
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_1.png" width="642">
+
+**Notice that the PO# slicer is masked until the Project slicer is utilized.**
+
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_2.png" width="642">
+
+
+**The Interns by Day page gives a closer look at each interns' performance and can be filtered by individual as well as Date range, action, or machine type.  This page helps identify the strongest performers to use when in a clutch situation, as well as those that need more training on certain tasks.**
+
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20by%20Day%20Page.png" width="642">
+
+
+**The Interns Individual page provides a different perspective on intern performance including daily averages for each individual as well as a ranked list of max records for the given date range.  This information can be leveraged at the request of the team itself to increase production through friendly competition.**
+
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20Individual%20Page.png" width="642">
