@@ -2,8 +2,7 @@
 
 **Purpose:** A portfolio showcasing my work creating daily reports for stakeholders and production monitoring.
 
-<img src="https://github.com/user-attachments/assets/48830fa8-0f89-453e-89b5-e06f8ba91d0f" width="321">
-<img src="https://github.com/user-attachments/assets/bc6a890a-47d0-448d-beeb-1db983d442bf" width="321">
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Report%20-%20Config%20daily%20production.png" width="321"><img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Orders%20Status%20Dashboard.png" width="321">
 
 ## Glossary
 
@@ -101,6 +100,8 @@ Merge Orders Query and expand Program column.
 
 ## Schema
 
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Config%20Status%20Schema.png" width="321">
+
 ## Measures
 
 ### Log Table
@@ -160,3 +161,10 @@ TargetValue:	Used for a gauge.	Returns the Imaged target value unless other cont
 
 
 ## Visualizations
+
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Imaged%20by%20Model%20Page.png" width="749">
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/MBR-QBR%20Page.png" width="749">
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_1.png" width="749">
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_2.png" width="749">
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20Individual%20Page.png" width="749">
+<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20by%20Day%20Page.png" width="749">
