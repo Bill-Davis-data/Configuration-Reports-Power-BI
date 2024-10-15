@@ -134,9 +134,11 @@ Merge Orders Query and expand Program column.
 
 The Date table has a single relationship to the Log table.
 
-The Data Entry, Log, and Archive Log tables are appended together They contain a foreign key and are the transactional data.  They have relationships with the attribute tables: Statuses, Targets, and Interns.
+The Data Entry, Log, and Archive Log tables are appended together during transformation. They contain a foreign key and are the transactional data.  They each have relationships with the attribute tables: Statuses, Targets, and Interns.
 
-Orders is the table containing the primary key, and has relationships with the attribute tables: User types, Machine Types, and Cart Division.
+Orders is the table containing the primary key, and has relationships with the attribute tables: User types and Machine Types.  The Task POID's table is appended during transformation.
+
+RCID is an attribute table used during transformation and requires no additional relationships.
 
 <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Config%20Status%20Schema.png" width="321">
 
