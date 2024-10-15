@@ -26,8 +26,10 @@ Collected Data: Tables with transactional data that is collected daily.
 
 #### Values
 
-###### Date Table
-
+<details>
+<summary>Date Table</summary>
+<br/>
+ 
 StartYear and EndYear Parameters are used to limit the size of the table.
 
 Create columns to populate Year, Month, Month Name, etc.
@@ -38,12 +40,22 @@ Create conditional column to give boolean results on whether each date is in the
 
 Duplicate the Date column and rename for later use in visualization with specific formatting.
 
-###### Other Tables
+<br/></details>
 
+<details>
+<summary>Other Tables</summary>
+<br/>
+ 
 Minimal changes done to other Values tables besides Change type, Capitalize, and Remove unecessary columns.
+
+<br/></details>
 
 #### Original Data
 
+<details>
+<summary>Orders</summary>
+<br/>
+ 
 The source for the Orders query is a range and not a table, so the headers get promoted and certain columns correctly renamed.
 
 Add custom column for PO_Year to use for filtering during visualization.
@@ -52,14 +64,24 @@ Add conditional column to populate applicable notes for each record.
 
 Filter out null values and added an index for sorting.
 
-Append Task POID's query after performing identical steps.
+<br/></details>
+
+<details>
+<summary>Task POID's</summary>
+<br/>
+ 
+Append Task POID's query to Orders table after performing identical steps.
 
 Task POID's is a list of generic tasks that are not tied to a specific PO but are still tracked activities.  i.e. counting accessories or AC Adapters, or performing periodic maintenance on warehouse equipment.
 
+<br/></details>
+
 #### Collected Data
 
-###### Data Entry
-
+<details>
+<summary>Data Entry</summary>
+<br/>
+ 
 Point of live transactional data collection.  Input daily by techincal personnel.
 
 The source for the Data Entry query is a range and not a table, so the headers get promoted and certain columns correctly renamed.  Also, blank rows and unecessary columns are removed, and the POID is set to all uppercase.
@@ -74,12 +96,20 @@ The source for the Data Entry query is a range and not a table, so the headers g
 
 Filter out null values from POID column.
 
-###### Archive Log
+<br/></details>
 
+<details>
+<summary>Archive Log</summary>
+<br/>
+ 
 No changes necessary after importing and setting correct data types.
 
-###### Log
+<br/></details>
 
+<details>
+<summary>Log</summary>
+<br/>
+ 
 The source for the Log query is a range and not a table, so the headers get promoted and blank rows and unecessary columns are removed.
 
 Append Data Entry and Archive Log queries.
@@ -98,14 +128,18 @@ Add conditional columns with boolean results on whether the action took place af
 
 Merge Orders Query and expand Program column.
 
+<br/></details>
+
 ## Schema
 
 <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Config%20Status%20Schema.png" width="321">
 
 ## Measures
 
-### Log Table
-
+<details>
+<summary>Log Table</summary>
+<br/>
+ 
 3 Month Etcher Maint:	Value used on a card.	Returns the number of days since maintenance logged using last entry by date.
 
 AC Adapter Shortage:	Value used on a card.	Returns the difference in AC adapters logged and devices unboxed, excluding certain model types that do not apply.
@@ -148,44 +182,58 @@ Weekly Avg:	Value used on a card.	Returns the weekly average of quantity logged.
 
 Weekly Etcher Maint:	Value used on a card.	Returns the number of days since maintenance logged using last entry by date.
 
-### Orders
+<br/></details>
 
+<details>
+<summary>Orders</summary>
+<br/>
+ 
 Message:	Used when certain slicers are masked.	Returns either the message or a blank string based on a flag condition.
 
-### Targets
+<br/></details>
 
+<details>
+<summary>Targets</summary>
+<br/>
+ 
 MaxValue:	Used for a gauge.	Returns the Imaged max value unless other context is selected.
 
 TargetValue:	Used for a gauge.	Returns the Imaged target value unless other context is selected.
 
-
+<br/></details>
 
 ## Visualizations
 
 **The centerpeice of the report, the Imaged by Model page provides an accurate graphical representation of Imaging work performed over both the current and previous weeks.  This is the most important tool when forecasting completion dates during the project.**
+| --- |
+| <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Imaged%20by%20Model%20Page.png" width="642"> |
 
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Imaged%20by%20Model%20Page.png" width="642">
-
+<br/>
 
 **The MBR/QBR page is a historical look spanning the entire range of records over years, as well as the last 12 months, rolling.  Created at the request of VP level personnel, this page is used to report services completed each month that can then be claimed for revenue.**
+| --- |
+| <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/MBR-QBR%20Page.png" width="642"> |
 
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/MBR-QBR%20Page.png" width="642">
-
+<br/>
 
 **The YTD page provides the ability to slice by various actions and date ranges as well as locations, machine types, and purchase orders.  This is most useful during pre-project planning for determining personnel needs.**
+| --- |
+| <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_1.png" width="642"> |
 
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_1.png" width="642">
+<br/>
 
 **Notice that the PO# slicer is masked until the Project slicer is utilized.**
+| --- |
+| <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_2.png" width="642"> |
 
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/YTD%20Page_2.png" width="642">
-
+<br/>
 
 **The Interns by Day page gives a closer look at each interns' performance and can be filtered by individual as well as Date range, action, or machine type.  This page helps identify the strongest performers to use when in a clutch situation, as well as those that need more training on certain tasks.**
+| --- |
+| <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20by%20Day%20Page.png" width="642"> |
 
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20by%20Day%20Page.png" width="642">
-
+<br/>
 
 **The Interns Individual page provides a different perspective on intern performance including daily averages for each individual as well as a ranked list of max records for the given date range.  This information can be leveraged at the request of the team itself to increase production through friendly competition.**
-
-<img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20Individual%20Page.png" width="642">
+| --- |
+| <img src="https://github.com/Bill-Davis-data/Configuration-Reports-Power-BI/blob/main/Assets/Interns%20Individual%20Page.png" width="642"> |
