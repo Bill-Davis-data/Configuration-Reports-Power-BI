@@ -20,7 +20,7 @@ VAR TOTAL_UNBOXED =
 		SUM('Log'[Quantity]),
 		'Log'[Date no time] > DATE(2024, 8, 20),
 		'Log'[Action] = "UNBOXED",
-		NOT ('Log'[Type] IN { "M70Q AV", "M70Q I3", "M70Q I5", "VR HEADSET PICO4" })
+        	MachineTypes[AC Adapters] = TRUE
 	)
 RETURN
 	IF(NOT ISBLANK(TOTAL_UNBOXED), TOTAL_ADAPTERS - TOTAL_UNBOXED)
@@ -36,7 +36,7 @@ VAR TOTAL_UNBOXED =
 		SUM('Log'[Quantity]),
 		'Log'[Date no time] > DATE(2024, 8, 20),
 		'Log'[Action] = "UNBOXED",
-		'Log'[Type] IN { "M70Q AV", "M70Q I3", "M70Q I5" }
+	        MachineTypes[Accessory Boxes] = TRUE
 	)
 RETURN
 	IF(NOT ISBLANK(TOTAL_UNBOXED), TOTAL_ACCESSORIES - TOTAL_UNBOXED)
