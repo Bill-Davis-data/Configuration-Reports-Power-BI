@@ -1,6 +1,9 @@
 let
     Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Orders.xlsx"), null, true),
     MachineTypes_Table = Source{[Item="MachineTypes",Kind="Table"]}[Data],
-    #"Changed Type" = Table.TransformColumnTypes(MachineTypes_Table,{{"Model", type text}, {"Current", type text}, {"Machine Types", type text}, {"Etched", type text}})
+    #"Reordered Columns" = Table.ReorderColumns(MachineTypes_Table,{"Model", "Machine Types", "Latest", "Etched", "AC Adapters", "Accessory Boxes"}),
+    #"Replaced Value" = Table.ReplaceValue(#"Reordered Columns","Yes","True",Replacer.ReplaceText,{"Latest", "Etched", "AC Adapters", "Accessory Boxes"}),
+    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","No","False",Replacer.ReplaceText,{"Latest", "Etched", "AC Adapters", "Accessory Boxes"}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Replaced Value1",{{"Model", type text}, {"Machine Types", type text}, {"Latest", type logical}, {"Etched", type logical}, {"AC Adapters", type logical}, {"Accessory Boxes", type logical}})
 in
     #"Changed Type"
