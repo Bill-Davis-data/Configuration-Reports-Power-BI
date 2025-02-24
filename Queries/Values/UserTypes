@@ -1,6 +1,6 @@
 let
     Source = Excel.Workbook(Web.Contents(#"Tenant Domain" & "Orders.xlsx"), null, true),
     UserTypes_Table = Source{[Item="UserTypes",Kind="Table"]}[Data],
-    #"Changed Type" = Table.TransformColumnTypes(UserTypes_Table,{{"User Types", type text}, {"Image", type text}})
+    #"Changed Type" = Table.TransformColumnTypes(UserTypes_Table,{{"User Type", type text}, {"Image", type text}, {"ID", type text}, {"SpDes", type text}, {"Comb", type text}})
 in
     #"Changed Type"
