@@ -56,8 +56,6 @@ Minimal changes done to other Values tables besides Change type, Capitalize, and
 <summary>Orders</summary>
 <br/>
  
-The source for the Orders query is a range and not a table, so the headers get promoted and certain columns correctly renamed.
-
 For consistency, uppercase applied to key column, add custom column for first 10 characters, and replace errors with a 0.
 
 Add custom column for PO_Year to use for filtering during visualization.
