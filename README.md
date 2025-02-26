@@ -58,11 +58,13 @@ Minimal changes done to other Values tables besides Change type, Capitalize, and
  
 The source for the Orders query is a range and not a table, so the headers get promoted and certain columns correctly renamed.
 
+For consistency, uppercase applied to key column, add custom column for first 10 characters, and replace errors with a 0.
+
 Add custom column for PO_Year to use for filtering during visualization.
 
-Add conditional column to populate applicable notes for each record.
+Filter out duplicates and null values from key column.
 
-Filter out null values and added an index for sorting.
+Add conditional column to populate applicable notes for each record, and add an index for sorting.
 
 <br/></details>
 
@@ -73,6 +75,16 @@ Filter out null values and added an index for sorting.
 Append Task POID's query to Orders table after performing identical steps.
 
 Task POID's is a list of generic tasks that are not tied to a specific PO but are still tracked activities.  i.e. counting accessories or AC Adapters, or performing periodic maintenance on warehouse equipment.
+
+<br/></details>
+
+<details>
+<summary>Orders Archive</summary>
+<br/>
+ 
+Retain Orders Archive query after performing identical steps as above queries.
+
+Orders Archive is a list of older orders that have already been delivered, and the data retained for future needs.  No current connections exist in the data model.
 
 <br/></details>
 
