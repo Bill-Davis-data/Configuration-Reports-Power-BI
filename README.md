@@ -16,11 +16,11 @@ RCID - School Number (or RC) ID.  A unique key column created to reference schoo
 
 Parameters: Easy to change values that are utilized across the entire model.
 
-Values: Tables consisting of static attributes that rarely change.
+Values: Dimension tables consisting of static attributes that rarely change.
 
-Original Data: Central tables containing key columns.  New records are added frequently.
+Original Data: Dimension tables containing key columns.  New records are added frequently.
 
-Collected Data: Tables with transactional data that is collected daily.
+Collected Data: Fact tables with transactional data that is collected daily.
 
 ### Data Cleaning Process
 
@@ -56,11 +56,15 @@ Minimal changes done to other Values tables besides Change type, Capitalize, and
 <summary>Orders</summary>
 <br/>
  
+The Orders table is a list of product orders that are either active or recently delivered within the past fiscal year.  It both creates and contains the primary key column, POID.
+
 For consistency, uppercase applied to key column, add custom column for first 10 characters, and replace errors with a 0.
 
 Add custom column for PO_Year to use for filtering during visualization.
 
 Filter out duplicates and null values from key column.
+
+Append Task POID's and Orders Archive queries.
 
 Add conditional column to populate applicable notes for each record, and add an index for sorting.
 
@@ -80,9 +84,9 @@ Task POID's is a list of generic tasks that are not tied to a specific PO but ar
 <summary>Orders Archive</summary>
 <br/>
  
-Retain Orders Archive query after performing identical steps as above queries.
+Append Orders Archive query to Orders table after performing identical steps.
 
-Orders Archive is a list of older orders that have already been delivered, and the data retained for future needs.  No current connections exist in the data model.
+Orders Archive is a list of older orders that have already been delivered.
 
 <br/></details>
 
@@ -92,7 +96,7 @@ Orders Archive is a list of older orders that have already been delivered, and t
 <summary>Data Entry</summary>
 <br/>
  
-Point of live transactional data collection.  Input daily by techincal personnel.
+Point of live transactional data collection.  Input daily by technical personnel.
 
 The source for the Data Entry query is a range and not a table, so the headers get promoted and certain columns correctly renamed.  Also, blank rows and unecessary columns are removed, and the POID is set to all uppercase.
 
@@ -120,7 +124,9 @@ No changes necessary after importing and setting correct data types.
 <summary>Log</summary>
 <br/>
  
-The source for the Log query is a range and not a table, so the headers get promoted and blank rows and unecessary columns are removed.
+The Log table is a list of recent transaction data copied over manually each morning from Data Entry.  This data is then copied manually to the Archive Log at least once per fiscal year.
+
+Set correct data types, remove unnecessary columns, and remove blank rows.
 
 Append Data Entry and Archive Log queries.
 
@@ -136,7 +142,7 @@ Add custom column time of day with no date.
 
 Add conditional columns with boolean results on whether the action took place after 4pm, 1:30pm, or before.
 
-Merge Orders Query and expand Program column.
+Merge Orders query and expand Program column.
 
 <br/></details>
 
