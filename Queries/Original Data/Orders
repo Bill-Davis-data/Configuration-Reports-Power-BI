@@ -9,8 +9,8 @@ let
     #"Inserted First Characters" = Table.AddColumn(#"Replaced Errors", "PO_Year", each Text.Start(Text.From([#"DCPS PO#"], "en-US"), 4), type text),
     #"Removed Duplicates" = Table.Distinct(#"Inserted First Characters", {"POID"}),
     #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each ([POID] <> null )),
-    #"Added Conditional Column" = Table.AddColumn(#"Filtered Rows", "Note", each if [Use Note] = "2" then [Notes] else if [Use Note] = "1" then [Issues] else null),
-    #"Added Index" = Table.AddIndexColumn(#"Added Conditional Column", "Index", 1, 1, Int64.Type),
-    #"Appended Query" = Table.Combine({#"Added Index", #"Task POIDs"})
+    #"Appended Query" = Table.Combine({#"Filtered Rows", #"Task POIDs", #"Orders Archive"}),
+    #"Added Conditional Column" = Table.AddColumn(#"Appended Query", "Note", each if [Use Note] = "2" then [Notes] else if [Use Note] = "1" then [Issues] else null),
+    #"Added Index" = Table.AddIndexColumn(#"Added Conditional Column", "Index", 1, 1, Int64.Type)
 in
-    #"Appended Query"
+    #"Added Index"
