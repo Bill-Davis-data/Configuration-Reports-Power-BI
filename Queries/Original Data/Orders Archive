@@ -8,8 +8,6 @@ let
     #"Replaced Errors" = Table.ReplaceErrorValues(#"Changed Type2", {{"DCPS PO#", 0}}),
     #"Inserted First Characters" = Table.AddColumn(#"Replaced Errors", "PO_Year", each Text.Start(Text.From([#"DCPS PO#"], "en-US"), 4), type text),
     #"Removed Duplicates" = Table.Distinct(#"Inserted First Characters", {"POID"}),
-    #"Added Conditional Column" = Table.AddColumn(#"Removed Duplicates", "Note", each if [Use Note] = "2" then [Notes] else if [Use Note] = "1" then [Issues] else null),
-    #"Filtered Rows" = Table.SelectRows(#"Added Conditional Column", each ([POID] <> null )),
-    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Project Header", "Header"}, {"Have/Need Asset", "Asset"}})
+    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each ([POID] <> null ))
 in
-    #"Renamed Columns"
+    #"Filtered Rows"
